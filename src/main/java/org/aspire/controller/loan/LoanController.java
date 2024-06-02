@@ -1,4 +1,4 @@
-package org.aspire.controller;
+package org.aspire.controller.loan;
 
 import org.aspire.data.Loan;
 import org.aspire.handler.LoanHandler;
@@ -22,7 +22,7 @@ public class LoanController implements LoanInterface {
 
     @Override
     @PostMapping
-    public LoanDTO createLoan(CreateLoanRequestDTO createLoanRequest) {
+    public LoanDTO createLoan(@RequestBody CreateLoanRequestDTO createLoanRequest) {
         String applicant = "Test User";
         Loan loan = loanHandler.createLoan(CreateLoanRequest.builder()
                 .terms(createLoanRequest.getTerms())
