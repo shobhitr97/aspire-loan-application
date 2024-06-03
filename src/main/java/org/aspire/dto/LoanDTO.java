@@ -15,5 +15,6 @@ public class LoanDTO {
     private String applicant;
     private int amount;
     private int terms;
+    private String status;
     private List<RepaymentDTO> repayments;
 }

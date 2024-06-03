@@ -3,6 +3,7 @@ package org.aspire.data;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,8 +12,9 @@ import java.io.Serializable;
 @Builder
 public class Repayment implements Serializable {
 
-    private String transactionRef;
+    private List<String> transactionIds;
     private int amount;
+    private int pendingAmount;
     private String status;
     private long expectedByMillis;
     private long paidOnMillis;

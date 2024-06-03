@@ -19,17 +19,19 @@ public class Loan extends BaseEntity {
     private String applicant;
     private int amount;
     private int terms;
+    private String status;
     private List<Repayment> repayments;
 
     public Loan() {
         super();
     }
 
-    public Loan(String applicant, int amount, int terms, List<Repayment> repayments) {
+    public Loan(String applicant, int amount, int terms, String status, List<Repayment> repayments) {
         super();
         this.applicant = applicant;
         this.amount = amount;
         this.repayments = repayments;
         this.terms = terms;
+        this.status = status;
     }
 }

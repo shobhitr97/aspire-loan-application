@@ -1,8 +1,8 @@
-package org.aspire.controller.loan;
+package org.aspire.controller;
 
 import org.aspire.data.Loan;
 import org.aspire.dto.LoanDTO;
-import org.aspire.handler.LoanHandler;
+import org.aspire.handler.ILoanHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,20 +14,23 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 @ExtendWith(MockitoExtension.class)
-public class LoanControllerTest {
+public class ApplicantControllerTest {
 
     @Mock
-    private LoanHandler loanHandler;
+    private ILoanHandler loanHandler;
     @InjectMocks
-    private LoanController loanController;
+    private ApplicantController applicantController;
 
     private static final String TEST_LOAN_ID = "testLoan-1";
 
+    private static final String TEST_USER_ID = "testUser-1";
+
     @BeforeAll
     public static void initMocks() {
-        MockitoAnnotations.openMocks(LoanControllerTest.class);
+        MockitoAnnotations.openMocks(ApplicantControllerTest.class);
     }
 
     @Test
@@ -39,9 +42,9 @@ public class LoanControllerTest {
         testLoan.setRepayments(new ArrayList<>());
         testLoan.setAmount(100);
 
-        Mockito.when(loanHandler.getLoanById(TEST_LOAN_ID)).thenReturn(testLoan);
+        Mockito.when(loanHandler.getLoansForUser(TEST_USER_ID)).thenReturn(Collections.singletonList(testLoan));
 
-        LoanDTO loanDTO = loanController.getLoanById(TEST_LOAN_ID);
+        LoanDTO loanDTO = applicantController.getLoans().get(0);
 
         Assertions.assertEquals(TEST_LOAN_ID, loanDTO.getLoanId());
         Assertions.assertEquals(testLoan.getApplicant(), loanDTO.getApplicant());

@@ -21,8 +21,8 @@ public class ObjectConverterUtils {
     public static RepaymentDTO createRepaymentDTO(Repayment repayment) {
         return RepaymentDTO.builder()
                 .amount(repayment.getAmount())
+                .pendingAmount(repayment.getPendingAmount())
                 .expectedByMillis(repayment.getExpectedByMillis())
-                .transactionRef(repayment.getTransactionRef())
                 .paidOnMillis(repayment.getPaidOnMillis())
                 .status(repayment.getStatus())
                 .build();

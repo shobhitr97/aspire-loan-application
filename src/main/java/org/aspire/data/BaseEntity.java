@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Setter
 public class BaseEntity implements Serializable {
 
+    // TODO : populate these for all create/update operations
+
     private long createdTimeMillis;
     private long updatedTimeMillis;
     private long lastUpdatedBy;
