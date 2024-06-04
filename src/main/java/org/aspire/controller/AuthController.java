@@ -5,6 +5,7 @@ import org.aspire.data.User;
 import org.aspire.dto.RegisterUserDTO;
 import org.aspire.exception.ValidationException;
 import org.aspire.handler.IUserHandler;
+import org.aspire.model.RegisterUserRequest;
 import org.aspire.utils.ValidatorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -37,12 +38,11 @@ public class AuthController implements AuthInterface {
         if (existingUserWithSameUsername != null) {
             throw new ValidationException("Username not available");
         }
-        User user = new User();
-        user.setUserType(registerUserDTO.getType());
-        user.setUsername(registerUserDTO.getUsername());
-        user.setFullName(registerUserDTO.getName());
-        user.setEncodedCredentials(HttpHeaders.encodeBasicAuth(registerUserDTO.getUsername(),
-                registerUserDTO.getPassword(), StandardCharsets.UTF_8));
-        this.userHandler.createUser(user);
+        this.userHandler.createUser(RegisterUserRequest.builder()
+                .name(registerUserDTO.getName())
+                .password(registerUserDTO.getPassword())
+                .type(registerUserDTO.getType())
+                .username(registerUserDTO.getUsername())
+                .build());
     }
 }

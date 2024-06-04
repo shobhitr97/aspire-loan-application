@@ -7,8 +7,9 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@EqualsAndHashCode
 public class CreateLoanRequestDTO {
 
-    private int amount;
+    private double amount;
     private int terms;
 }

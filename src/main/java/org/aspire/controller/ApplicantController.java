@@ -11,7 +11,7 @@ import org.aspire.handler.ILoanHandler;
 import org.aspire.model.CreateLoanRequest;
 import org.aspire.model.LoanRepaymentRequest;
 import org.aspire.model.RequestMetadata;
-import org.aspire.utils.LoanUtils;
+import org.aspire.utils.GenericUtils;
 import org.aspire.utils.ObjectConverterUtils;
 import org.aspire.utils.ValidatorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class ApplicantController implements ApplicantInterface {
         if (loan == null) {
             throw new IllegalArgumentException(String.format("no loan found for loanId: %s", loanId));
         }
-        ValidatorUtils.validateInRange(makeRepaymentDTO.getAmount(), 0, LoanUtils.getPendingAmount(loan), "repayment amount");
+        ValidatorUtils.validateInRange(makeRepaymentDTO.getAmount(), 0.1d, GenericUtils.getPendingAmount(loan), "repayment amount");
         if (!LoanConstants.APPROVED_LOAN_STATUS.equals(loan.getStatus())) {
             throw new IllegalArgumentException(String.format("Loan %s is already %s", loanId, loan.getStatus()));
         }

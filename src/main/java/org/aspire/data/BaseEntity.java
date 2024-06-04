@@ -10,13 +10,12 @@ import java.io.Serializable;
 @Builder
 @Getter
 @Setter
+@EqualsAndHashCode
 public class BaseEntity implements Serializable {
-
-    // TODO : populate these for all create/update operations
 
     private long createdTimeMillis;
     private long updatedTimeMillis;
-    private long lastUpdatedBy;
+    private String lastUpdatedBy;
     private boolean deleted;
     @Version
     private int version;

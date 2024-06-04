@@ -2,6 +2,8 @@ package org.aspire.dao;
 
 import org.aspire.dao.repository.LoanRepository;
 import org.aspire.data.Loan;
+import org.aspire.model.EntityAction;
+import org.aspire.utils.GenericUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,9 @@ public class LoanDao implements ILoanDao {
 
 
     @Override
-    public void createLoan(Loan loan) {
-        this.repo.insert(loan);
+    public Loan createLoan(Loan loan, String userId) {
+        GenericUtils.updateBaseEntity(EntityAction.INSERT, loan, userId);
+        return this.repo.insert(loan);
     }
 
     @Override
@@ -35,7 +38,8 @@ public class LoanDao implements ILoanDao {
     }
 
     @Override
-    public void updateLoan(Loan loan) {
+    public void updateLoan(Loan loan, String userId) {
+        GenericUtils.updateBaseEntity(EntityAction.UPDATE, loan, userId);
         this.repo.save(loan);
     }
 

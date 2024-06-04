@@ -1,14 +1,13 @@
-package org.aspire.dto;
+package org.aspire.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Getter
-@Setter
 @EqualsAndHashCode
-public class RegisterUserDTO {
+public class RegisterUserRequest {
 
     private String username;
     private String password;

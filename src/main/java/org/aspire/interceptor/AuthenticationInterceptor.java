@@ -6,7 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.aspire.data.User;
 import org.aspire.handler.IUserHandler;
 import org.aspire.model.RequestMetadata;
-import org.aspire.utils.AuthUtils;
+import org.aspire.utils.GenericUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
         String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
-        String encodedCredentials = AuthUtils.getCredentialsFromHeader(authorizationHeader);
+        String encodedCredentials = GenericUtils.getCredentialsFromHeader(authorizationHeader);
 
         User user = this.userHandler.getUserByCredentials(encodedCredentials);
 

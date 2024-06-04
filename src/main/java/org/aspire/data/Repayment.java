@@ -13,9 +13,9 @@ import java.util.List;
 public class Repayment implements Serializable {
 
     private List<String> transactionIds;
-    private int amount;
-    private int pendingAmount;
+    private double amount;
+    private double pendingAmount;
     private String status;
     private long expectedByMillis;
-    private long paidOnMillis;
+    private Long paidOnMillis;
 }

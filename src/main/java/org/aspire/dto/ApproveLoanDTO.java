@@ -7,6 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@EqualsAndHashCode
 public class ApproveLoanDTO {
 
     private boolean approved;

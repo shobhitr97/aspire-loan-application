@@ -4,5 +4,5 @@ import org.aspire.data.Transaction;
 
 public interface ITransactionDao {
 
-    void createTransaction(Transaction transaction);
+    void createTransaction(Transaction transaction, String userId);
 }

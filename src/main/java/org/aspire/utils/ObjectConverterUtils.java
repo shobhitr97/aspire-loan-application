@@ -14,6 +14,7 @@ public class ObjectConverterUtils {
                 .amount(loan.getAmount())
                 .terms(loan.getTerms())
                 .applicant(loan.getApplicant())
+                .status(loan.getStatus())
                 .repayments(loan.getRepayments().stream().map(ObjectConverterUtils::createRepaymentDTO).toList())
                 .build();
     }

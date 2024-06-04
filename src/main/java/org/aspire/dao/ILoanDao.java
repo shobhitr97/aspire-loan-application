@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ILoanDao {
 
-    void createLoan(Loan loan);
+    Loan createLoan(Loan loan, String userId);
 
     List<Loan> getAllUserLoans(String userId);
 
     List<Loan> getAllLoansWithStatus(String status);
 
-    void updateLoan(Loan loan);
+    void updateLoan(Loan loan, String userId);
 
     Loan getLoanById(String loanId);
 }

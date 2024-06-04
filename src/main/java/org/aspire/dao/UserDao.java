@@ -2,6 +2,8 @@ package org.aspire.dao;
 
 import org.aspire.dao.repository.UserRepository;
 import org.aspire.data.User;
+import org.aspire.model.EntityAction;
+import org.aspire.utils.GenericUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,9 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public void createUser(User user) {
-        this.repo.insert(user);
+    public User createUser(User user) {
+        GenericUtils.updateBaseEntity(EntityAction.INSERT, user, null);
+        return this.repo.insert(user);
     }
 
     @Override

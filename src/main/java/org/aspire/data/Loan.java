@@ -17,7 +17,7 @@ public class Loan extends BaseEntity {
     @Id
     private String loanId;
     private String applicant;
-    private int amount;
+    private double amount;
     private int terms;
     private String status;
     private List<Repayment> repayments;

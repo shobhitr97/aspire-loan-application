@@ -8,12 +8,14 @@ import org.aspire.data.Repayment;
 import org.aspire.data.Transaction;
 import org.aspire.model.CreateLoanRequest;
 import org.aspire.model.LoanRepaymentRequest;
+import org.aspire.utils.GenericUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LoanHandler implements ILoanHandler {
@@ -36,14 +38,13 @@ public class LoanHandler implements ILoanHandler {
     @Override
     public Loan createLoan(CreateLoanRequest createLoanRequest) {
         Loan loan = createLoanFromRequest(createLoanRequest);
-        loanDao.createLoan(loan);
-        return loanDao.getLoanById(loan.getLoanId());
+        return loanDao.createLoan(loan, loan.getApplicant());
     }
 
     @Override
-    public void approveLoan(Loan loan, boolean approved) {
+    public void approveLoan(Loan loan, boolean approved, String userId) {
         loan.setStatus(approved ? LoanConstants.APPROVED_LOAN_STATUS : LoanConstants.REJECTED_LOAN_STATUS);
-        loanDao.updateLoan(loan);
+        loanDao.updateLoan(loan, userId);
     }
 
     @Override
@@ -60,44 +61,55 @@ public class LoanHandler implements ILoanHandler {
     public void makeRepayment(LoanRepaymentRequest loanRepaymentRequest) {
         Loan loan = loanRepaymentRequest.getLoan();
         String transactionRef = loanRepaymentRequest.getTransactionRef();
-        int amount = loanRepaymentRequest.getAmount();
+        double amount = loanRepaymentRequest.getAmount();
 
         Transaction transaction = new Transaction();
+        transaction.setTransactionId(UUID.randomUUID().toString());
         transaction.setTransactionRef(transactionRef);
         transaction.setLoanId(loan.getLoanId());
         transaction.setAmount(amount);
         transaction.setUserId(loan.getApplicant());
-        transactionDao.createTransaction(transaction);
+        transactionDao.createTransaction(transaction, loan.getApplicant());
 
-        int remainingMoney = amount;
+        double remainingMoney = amount;
         for (Repayment repayment : loan.getRepayments()) {
             if (LoanConstants.PENDING_REPAYMENT_STATUS.equals(repayment.getStatus())) {
-                int pendingAmount = repayment.getPendingAmount();
+                double pendingAmount = repayment.getPendingAmount();
                 repayment.getTransactionIds().add(transaction.getTransactionId());
 
-                if (remainingMoney >= pendingAmount) {
+                if (Math.abs(remainingMoney - pendingAmount) <= 0.1d) {
                     repayment.setStatus(LoanConstants.PAID_REPAYMENT_STATUS);
-                    repayment.setPendingAmount(0);
+                    repayment.setPendingAmount(0d);
+                    repayment.setPaidOnMillis(System.currentTimeMillis());
+                    remainingMoney = 0d;
+                } else if (remainingMoney > pendingAmount) {
+                    repayment.setStatus(LoanConstants.PAID_REPAYMENT_STATUS);
+                    repayment.setPendingAmount(0d);
                     repayment.setPaidOnMillis(System.currentTimeMillis());
                     remainingMoney -= pendingAmount;
                 } else {
                     repayment.setPendingAmount(pendingAmount - remainingMoney);
-                    remainingMoney = 0;
+                    remainingMoney = 0d;
                 }
 
-                if (remainingMoney == 0) {
+                if (remainingMoney == 0d) {
                     break;
                 }
             }
         }
 
-        loanDao.updateLoan(loan);
+        double finalLoanPendingAmount = GenericUtils.getPendingAmount(loan);
+        if (finalLoanPendingAmount <= 0.1d) {
+            loan.setStatus(LoanConstants.PAID_LOAN_STATUS);
+        }
+
+        loanDao.updateLoan(loan, loan.getApplicant());
     }
 
     private Loan createLoanFromRequest(CreateLoanRequest createLoanRequest) {
         List<Repayment> repayments = new ArrayList<>();
         long now = System.currentTimeMillis();
-        int repaymentAmount = createLoanRequest.getAmount() / createLoanRequest.getTerms();
+        double repaymentAmount = createLoanRequest.getAmount() / (double) createLoanRequest.getTerms();
         for (int i = 0; i < createLoanRequest.getTerms(); i++) {
             long repaymentTimeMillis = now + Duration.ofDays(7L * (i + 1)).toMillis();
             repayments.add(Repayment.builder()

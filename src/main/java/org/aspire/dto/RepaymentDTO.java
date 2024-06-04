@@ -7,10 +7,11 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@EqualsAndHashCode
 public class RepaymentDTO {
-    private int amount;
-    private int pendingAmount;
+    private double amount;
+    private double pendingAmount;
     private String status;
     private long expectedByMillis;
-    private long paidOnMillis;
+    private Long paidOnMillis;
 }

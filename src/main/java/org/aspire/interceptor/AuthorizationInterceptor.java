@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.aspire.constants.LoanConstants;
 import org.aspire.data.User;
 import org.aspire.model.RequestMetadata;
-import org.aspire.utils.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

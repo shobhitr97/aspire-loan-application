@@ -12,7 +12,7 @@ public interface ILoanHandler {
 
     Loan createLoan(CreateLoanRequest createLoanRequest);
 
-    void approveLoan(Loan loan, boolean approved);
+    void approveLoan(Loan loan, boolean approved, String userId);
 
     List<Loan> getLoansForUser(String userId);
 

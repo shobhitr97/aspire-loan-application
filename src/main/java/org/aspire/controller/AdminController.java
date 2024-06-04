@@ -9,10 +9,7 @@ import org.aspire.model.RequestMetadata;
 import org.aspire.utils.ObjectConverterUtils;
 import org.aspire.utils.ValidatorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,11 +36,12 @@ public class AdminController implements AdminInterface {
         if (!LoanConstants.PENDING_LOAN_STATUS.equals(loan.getStatus())) {
             throw new IllegalArgumentException(String.format("Loan %s is already %s", approveLoanDTO.getLoanId(), loan.getStatus()));
         }
-        loanHandler.approveLoan(loan, approveLoanDTO.isApproved());
+        loanHandler.approveLoan(loan, approveLoanDTO.isApproved(), requestMetadata.getUser().getUserId());
     }
 
     @Override
-    public List<LoanDTO> getLoansByStatus(String status) {
+    @GetMapping("/loans/{status}")
+    public List<LoanDTO> getLoansByStatus(@PathVariable String status) {
         ValidatorUtils.validateInValues(status, LoanConstants.ALLOWED_LOAN_STATUSES, "loan status");
 
         List<Loan> loans = loanHandler.getLoansByStatus(status);

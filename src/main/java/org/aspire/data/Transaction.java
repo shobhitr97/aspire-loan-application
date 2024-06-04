@@ -14,7 +14,7 @@ public class Transaction extends BaseEntity {
 
     private String transactionId;
     private String transactionRef;
-    private int amount;
+    private double amount;
     private String userId;
     private String loanId;
 }

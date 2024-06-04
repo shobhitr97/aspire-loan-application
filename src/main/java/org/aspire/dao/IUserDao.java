@@ -4,7 +4,7 @@ import org.aspire.data.User;
 
 public interface IUserDao {
 
-    void createUser(User user);
+    User createUser(User user);
 
     User getUserByCredentials(String credentials);
 
