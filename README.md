@@ -19,7 +19,9 @@ This authorization header needs to be included in every request to API server
 * `/admin/**` APIs are only accessible to `admin` users
 * `/applicant/**` APIs are only accessible to `applicant` users
 
-### User flow
+### User flow 
+
+Assumption : Both the applicant and admin users are already registered in the system
 
 * Step 1 : Applicant creates a loan
 * Step 2 : Admin gets all the loans in pending status
