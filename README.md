@@ -7,6 +7,10 @@
 ### Run application
 ```./gradlew build && ./gradlew bootRun```
 
+### Postman collection
+
+`postman_collection.json` is in v2.1 format and has all the APIs that are needed to test the flow
+
 ---
 
 ### Authentication and Authorization

@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "032bba78-cb37-418a-956b-47bad2833e12",
+		"name": "Aspire Loan Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25328293"
+	},
+	"item": [
+		{
+			"name": "[alpha] Create Loan Basic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YXBwbGljYW50VXNlcjpwYXNzd29yZENvbXBsaWNhdGVk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 1000,\n    \"terms\": 7\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/applicant/loan",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						"loan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[alpha] Make Loan Repayment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YXBwbGljYW50VXNlcjpwYXNzd29yZENvbXBsaWNhdGVk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 999.91,\n    \"transactionRef\": \"05713n45c3-965c134\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/applicant/loan/665f73656c18991f702e9a8a/repayment",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						"loan",
+						"665f73656c18991f702e9a8a",
+						"repayment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[alpha] Get Applicant Loans",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YXBwbGljYW50VXNlcjpwYXNzd29yZENvbXBsaWNhdGVk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/applicant/loans",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[alpha] Get All Pending Loans",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW5Vc2VyOnBhc3N3b3Jk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/admin/loans/pending",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"loans",
+						"pending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[alpha] Register Applicant User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"applicantUser\",\n    \"password\": \"passwordComplicated\",\n    \"name\": \"Applicant User\",\n    \"type\": \"applicant\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[alpha] Register Admin User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"adminUser\",\n    \"password\": \"password\",\n    \"name\": \"Admin User\",\n    \"type\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[alpha] Admin Approve Loan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW5Vc2VyOnBhc3N3b3Jk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"loanId\": \"665f73656c18991f702e9a8a\",\n    \"approved\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/admin/loan/approve",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"loan",
+						"approve"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
